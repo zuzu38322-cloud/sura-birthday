@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>İyi ki Doğdun Şura!</title>
-    <!-- PWA / Mobil Tam Ekran Desteği -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
@@ -17,153 +16,230 @@
             -webkit-tap-highlight-color: transparent;
         }
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            font-family: 'Fredoka', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #a1c4fd 100%);
+            background-size: 200% 200%;
+            animation: gradientBG 10s ease infinite;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             text-align: center;
             padding: 20px;
+            position: relative;
         }
+
+        /* Yüzen Arka Plan Şekilleri */
+        .bg-float {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.6;
+            animation: floatUp 8s linear infinite;
+            z-index: 1;
+        }
+
+        /* Cam Efektli Kart */
         .container {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            padding: 30px 20px;
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 35px 25px;
+            border-radius: 35px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 40px rgba(255, 71, 126, 0.2);
             max-width: 380px;
             width: 100%;
             position: relative;
             z-index: 10;
-            animation: bounceIn 1s ease;
         }
+
+        /* Yavaş Yavaş Gelen Animasyonlar (Fade In) */
+        .fade-item {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards ease-out;
+        }
+
+        .delay-1 { animation-delay: 0.3s; }
+        .delay-2 { animation-delay: 0.6s; }
+        .delay-3 { animation-delay: 0.9s; }
+        .delay-4 { animation-delay: 1.2s; }
+
         .cat-box {
-            font-size: 70px;
+            font-size: 85px;
             margin-bottom: 10px;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: inline-block;
+            filter: drop-shadow(0 8px 15px rgba(0,0,0,0.1));
         }
         .cat-box:active {
-            transform: scale(1.2) rotate(10deg);
+            transform: scale(1.25) rotate(10deg);
         }
+
         h1 {
-            color: #ff477e;
-            font-size: 28px;
-            font-weight: 800;
-            margin-bottom: 5px;
+            color: #ff3366;
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
         }
+
         .age-badge {
-            background: #ff477e;
+            background: linear-gradient(45deg, #ff3366, #ff6b8b);
             color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 14px;
+            padding: 6px 18px;
+            border-radius: 25px;
+            font-size: 15px;
             font-weight: 600;
             display: inline-block;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(255, 51, 102, 0.3);
         }
+
         p {
-            color: #555;
-            font-size: 15px;
-            line-height: 1.5;
-            margin-bottom: 20px;
+            color: #4a4a4a;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-weight: 400;
         }
+
         .touch-btn {
-            background: linear-gradient(45deg, #ff477e, #ff7096);
+            background: linear-gradient(45deg, #ff3366, #ff6b8b);
             color: white;
             border: none;
-            padding: 12px 25px;
-            font-size: 16px;
-            font-weight: 600;
+            padding: 16px 30px;
+            font-size: 18px;
+            font-weight: 700;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 71, 126, 0.4);
-            transition: transform 0.1s, box-shadow 0.1s;
+            box-shadow: 0 8px 25px rgba(255, 51, 102, 0.4);
+            transition: all 0.2s;
             width: 100%;
         }
         .touch-btn:active {
             transform: scale(0.95);
-            box-shadow: 0 2px 8px rgba(255, 71, 126, 0.4);
+            box-shadow: 0 4px 12px rgba(255, 51, 102, 0.4);
         }
-        /* Konfeti Parçacıkları */
-        .confetti {
+
+        /* Konfeti ve Pati Parçacıkları */
+        .particle {
             position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: #ffd700;
-            top: -10px;
-            opacity: 0.8;
+            top: -20px;
+            opacity: 0.9;
             animation: fall linear forwards;
-            z-index: 1;
+            z-index: 2;
+            pointer-events: none;
         }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(105vh) scale(0.8); opacity: 0; }
+            50% { opacity: 0.7; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
         @keyframes fall {
             to {
                 transform: translateY(105vh) rotate(720deg);
                 opacity: 0;
             }
         }
-        @keyframes bounceIn {
-            0% { transform: scale(0.3); opacity: 0; }
-            50% { transform: scale(1.05); }
-            70% { transform: scale(0.9); }
-            100% { transform: scale(1); opacity: 1; }
-        }
     </style>
 </head>
 <body>
 
+    <!-- Arka Plan Süzülen Objeler -->
+    <div class="bg-float" style="left: 10%; animation-duration: 9s;">✨</div>
+    <div class="bg-float" style="left: 25%; animation-duration: 7s; animation-delay: 2s;">💖</div>
+    <div class="bg-float" style="left: 60%; animation-duration: 10s; animation-delay: 1s;">🐾</div>
+    <div class="bg-float" style="left: 80%; animation-duration: 8s; animation-delay: 3s;">🎈</div>
+
     <div class="container">
-        <div class="cat-box" id="catEmoji">🐱🎂</div>
-        <h1>İyi ki Doğdun Şura!</h1>
-        <div class="age-badge">13 Yaşında! ✨</div>
-        <p>Yeni yaşın sana mutluluk, başarı ve tatlı anlar getirsin! Kedili ve neşeli günlerin hiç eksik olmasın. Dokun ve kutlamayı başlat! 🎉</p>
-        <button class="touch-btn" onclick="celebrate()">Sürprizi Patlat! 🎈</button>
+        <div class="cat-box fade-item delay-1" id="catEmoji" onclick="changeCat(event)">🐱🎂</div>
+        <h1 class="fade-item delay-2">İyi ki Doğdun Şura!</h1>
+        <div class="age-badge fade-item delay-2">✨ 13. Yaşın Kutlu Olsun ✨</div>
+        <p class="fade-item delay-3">Yeni yaşın sana neşe, başarı ve bolca tatlı sürpriz getirsin! Kedili ve eğlenceli günlerin hiç eksik olmasın. 🎉</p>
+        <button class="touch-btn fade-item delay-4" onclick="celebrate()">Sürprizi Patlat! 🎈</button>
     </div>
 
     <script>
-        // Kediye tıklayınca miyav efekti veya hareket
-        const cat = document.getElementById('catEmoji');
-        const cats = ['🐱🎂', '😺🎉', '😻💖', '😽🎈', '😸✨'];
+        const cats = ['🐱🎂', '😸🎉', '😻💖', '😽🎈', '😸✨', '🐾🎉', '😻🎂'];
         let catIndex = 0;
 
-        cat.addEventListener('click', () => {
+        function changeCat(e) {
             catIndex = (catIndex + 1) % cats.length;
-            cat.textContent = cats[catIndex];
-            createConfettiBurst();
-        });
+            const catElem = document.getElementById('catEmoji');
+            catElem.textContent = cats[catIndex];
+            
+            // Ekran üzerinde pati uçurma
+            createParticles(e.clientX, e.clientY, '🐾', 6);
+            if (navigator.vibrate) navigator.vibrate(50);
+        }
 
         function celebrate() {
-            createConfettiBurst();
-            // Titreşim desteği (Telefon destekliyorsa dokunulduğunda titrer)
+            createConfetti(60);
             if (navigator.vibrate) {
                 navigator.vibrate([100, 50, 100]);
             }
         }
 
-        function createConfettiBurst() {
-            for (let i = 0; i < 40; i++) {
+        function createConfetti(count) {
+            const colors = ['#ff3366', '#ffd700', '#00f2fe', '#4facfe', '#fa709a', '#70a1ff'];
+            for (let i = 0; i < count; i++) {
                 const confetti = document.createElement('div');
-                confetti.classList.add('confetti');
+                confetti.classList.add('particle');
                 confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.backgroundColor = ['#ff477e', '#ffd700', '#00f2fe', '#4facfe', '#fa709a'][Math.floor(Math.random() * 5)];
-                confetti.style.animationDuration = (Math.random() * 2 + 1) + 's';
-                confetti.style.width = (Math.random() * 8 + 6) + 'px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+                confetti.style.width = (Math.random() * 8 + 8) + 'px';
                 confetti.style.height = confetti.style.width;
+                confetti.style.borderRadius = '4px';
                 document.body.appendChild(confetti);
 
-                setTimeout(() => {
-                    confetti.remove();
-                }, 3000);
+                setTimeout(() => { confetti.remove(); }, 3500);
             }
         }
 
-        // Sayfa açıldığında otomatik küçük bir konfetti
+        function createParticles(x, y, symbol, count) {
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.textContent = symbol;
+                p.style.position = 'fixed';
+                p.style.left = (x + (Math.random() * 60 - 30)) + 'px';
+                p.style.top = (y + (Math.random() * 60 - 30)) + 'px';
+                p.style.fontSize = '24px';
+                p.style.pointerEvents = 'none';
+                p.style.transition = 'all 1s ease-out';
+                p.style.opacity = '1';
+                p.style.zIndex = '100';
+                document.body.appendChild(p);
+
+                setTimeout(() => {
+                    p.style.transform = `translateY(-80px) scale(1.4)`;
+                    p.style.opacity = '0';
+                }, 50);
+
+                setTimeout(() => { p.remove(); }, 1050);
+            }
+        }
+
         window.onload = () => {
-            setTimeout(createConfettiBurst, 500);
+            setTimeout(() => createConfetti(25), 1000);
         };
     </script>
 </body>
